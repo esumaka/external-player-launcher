@@ -48,7 +48,13 @@ Supported media players and operating systems:
 
 ## Installing the Plugin
 
-See [Installing Plugins](/README.md#installing-plugins)
+1. In Stash, go to **Settings** → **Plugins**
+2. Click **Add Source** and fill in the following:
+   * **Name**: `esumaka plugin repo`
+   * **Source URL**: `https://esumaka.github.io/stash-plugin-repo/main/index.yml`
+3. Click **Confirm** to add the source
+4. Select `External Player Launcher` from the Available Plugins list and click **Install**
+5. Refresh the Stash page for the plugin to take effect
 
 ## Usage
 
@@ -63,7 +69,33 @@ This plugin may conflict with other plugins that modify scene cards, which could
 
 ## Development
 
-See [Development](/README.md#development)
+### Requirements
+
+- [Node.js](https://nodejs.org/) >= 20.11.0
+- [pnpm](https://pnpm.io/)
+
+### Initialization & Configuration
+
+- Install dependencies:
+  - Run `pnpm install --frozen-lockfile`
+- Configure environment variables:
+  - Copy the `.env.example` file and rename it to `.env`
+  - Set `STASH_PLUGINS_DIR` in `.env` to your local Stash plugins directory
+  - Set `STASH_SOURCE_INDEX_DIR` in `.env` to your plugin source index repository root (typically the repo's `plugins` folder)
+
+### Build the Plugin
+
+- Run `pnpm build`, or in Visual Studio Code go to **Explorer → NPM Scripts** and click the `build` script.
+- The output will be placed in the project's `dist` folder.
+
+### Deploy to Local Stash (for debugging)
+
+- Run `pnpm deploy`, or in Visual Studio Code go to **Explorer → NPM Scripts** and click the `deploy` script.
+- In Stash, go to **Settings** → **Plugins** and click **Reload Plugins**, then refresh the Stash page.
+
+### Release the Plugin
+
+- Run `pnpm release`, or in Visual Studio Code go to **Explorer → NPM Scripts** and click the `release` script.
 
 ## Acknowledgements
 

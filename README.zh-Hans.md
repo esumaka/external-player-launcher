@@ -74,9 +74,14 @@
 - [Node.js](https://nodejs.org/) >= 20.11.0
 - [pnpm](https://pnpm.io/)
 
-### 安装依赖
+### 初始化与配置
 
-- 运行 `pnpm install --frozen-lockfile`
+- 安装依赖：
+  - 运行 `pnpm install --frozen-lockfile`
+- 配置环境变量：
+  - 复制 `.env.example` 文件并重命名为 `.env`
+  - 设置 `.env` 的 `STASH_PLUGINS_DIR` 为本地 Stash 插件目录
+  - 设置 `.env` 的 `STASH_SOURCE_INDEX_DIR` 为插件源索引仓库的目录，通常为仓库的 `plugins` 文件夹。
 
 ### 构建插件
 
@@ -85,13 +90,11 @@
 
 ### 部署到本地 Stash（开发调试）
 
-- 部署前先设置 [.env](.env) 的 `STASH_PLUGINS_DIR` 为自己的 Stash 插件目录
 - 运行 `pnpm deploy`，或者在 Visual Studio Code 的 **资源管理器 → NPM脚本** 中，点击运行 `deploy` 脚本。
 - 在 Stash 的 **设置** → **插件** 页面中点击 **重载插件**，然后刷新 Stash 页面使插件生效。
 
 ### 发布插件
 
-- 发布前先设置 [.env](.env) 的 `STASH_SOURCE_INDEX_DIR` 为插件源索引仓库的目录，通常为仓库的 `plugins` 文件夹。
 - 运行 `pnpm release`，或者在 Visual Studio Code 的 **资源管理器 → NPM脚本** 中，点击运行 `release` 脚本。
 
 ## 致谢
