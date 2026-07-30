@@ -91,11 +91,13 @@
 ### 部署到本地 Stash（开发调试）
 
 - 运行 `pnpm deploy`，或者在 Visual Studio Code 的 **资源管理器 → NPM脚本** 中，点击运行 `deploy` 脚本。
+- 会将构建产物输出到 `STASH_PLUGINS_DIR` 文件夹中。
 - 在 Stash 的 **设置** → **插件** 页面中点击 **重载插件**，然后刷新 Stash 页面使插件生效。
 
 ### 发布插件
 
 - 运行 `pnpm release`，或者在 Visual Studio Code 的 **资源管理器 → NPM脚本** 中，点击运行 `release` 脚本。
+- 会将构建产物输出到 `STASH_SOURCE_INDEX_DIR` 文件夹中。
 
 ## 致谢
 

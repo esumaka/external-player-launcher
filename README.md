@@ -91,11 +91,13 @@ This plugin may conflict with other plugins that modify scene cards, which could
 ### Deploy to Local Stash (for debugging)
 
 - Run `pnpm deploy`, or in Visual Studio Code go to **Explorer → NPM Scripts** and click the `deploy` script.
+- The output will be placed in the `STASH_PLUGINS_DIR` folder.
 - In Stash, go to **Settings** → **Plugins** and click **Reload Plugins**, then refresh the Stash page.
 
 ### Release the Plugin
 
 - Run `pnpm release`, or in Visual Studio Code go to **Explorer → NPM Scripts** and click the `release` script.
+- The output will be placed in the `STASH_SOURCE_INDEX_DIR` folder.
 
 ## Acknowledgements
 
