@@ -8,6 +8,8 @@
   "settings.showSceneCardButtonsHint": "When turned off, external player buttons will be hidden from scene cards.",
   "settings.showSceneDetailButtons": "Show detail page player tab",
   "settings.showSceneDetailButtonsHint": "When turned off, the external player tab will be hidden from the scene detail page.",
+  "settings.showSceneToolbarButtons": "Show detail page toolbar player buttons",
+  "settings.showSceneToolbarButtonsHint": "When turned off, external player buttons will be hidden from the scene detail page toolbar.",
   "settings.playerGroupTitle": "Player Settings",
   "settings.singlePlayerMode": "Enable single player mode",
   "settings.singlePlayerModeHint": "When turned on, the player selector at the bottom of scene cards will be replaced with the player button selected below.",

@@ -97,6 +97,8 @@
     showSceneCardButtons: boolean;
     /** Show external player buttons on scene detail page (tabs) */
     showSceneDetailButtons: boolean;
+    /** Show external player buttons on scene detail page toolbar */
+    showSceneToolbarButtons: boolean;
   }
 
   const defaultSettings: SettingsState = {
@@ -105,6 +107,7 @@
     singlePlayerMode: false,
     showSceneCardButtons: true,
     showSceneDetailButtons: true,
+    showSceneToolbarButtons: true,
   };
 
   function cloneSettings(settings: SettingsState): SettingsState {
@@ -477,15 +480,15 @@
   }
 
   /** Thin wrapper: provides IntlProvider context for SettingsModalInner */
-  function SettingsModal() {
+  function SettingsModal({ refreshOnSave }: { refreshOnSave?: boolean }) {
     return (
       <PluginIntlProvider>
-        <SettingsModalInner />
+        <SettingsModalInner refreshOnSave={refreshOnSave} />
       </PluginIntlProvider>
     );
   }
 
-  function SettingsModalInner() {
+  function SettingsModalInner({ refreshOnSave }: { refreshOnSave?: boolean }) {
     const intl = Intl.useIntl();
     const [show, setShow] = React.useState(false);
     const { settings } = useSettingsState();
@@ -533,6 +536,9 @@
     const confirmSettings = () => {
       saveSettings(draftSettings);
       setShow(false);
+      if (refreshOnSave) {
+        window.location.reload();
+      }
     };
 
     const resetDraftSettings = () => {
@@ -606,6 +612,24 @@
                 />
                 <div className="ep-hint">
                   <FormattedMessage id="settings.showSceneDetailButtonsHint" />
+                </div>
+              </div>
+
+              <div className="ep-options">
+                <Form.Check
+                  type="switch"
+                  id="external-player-show-toolbar-buttons"
+                  label={intl.formatMessage({ id: 'settings.showSceneToolbarButtons' })}
+                  checked={draftSettings.showSceneToolbarButtons}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setDraftSettings((current) => ({
+                      ...current,
+                      showSceneToolbarButtons: event.target.checked,
+                    }))
+                  }
+                />
+                <div className="ep-hint">
+                  <FormattedMessage id="settings.showSceneToolbarButtonsHint" />
                 </div>
               </div>
             </div>
@@ -783,9 +807,6 @@
   }
 
   function ExternalPlayerTabLabel() {
-    const { settings } = useSettingsState();
-    if (!settings.showSceneDetailButtons) return null;
-
     return (
       <Nav.Item key="external-player-tab-nav">
         <Nav.Link eventKey="external-player-tab">
@@ -801,9 +822,6 @@
   }
 
   function ExternalPlayerTabContent({ sceneProps }: { sceneProps: any }) {
-    const { settings } = useSettingsState();
-    if (!settings.showSceneDetailButtons) return null;
-
     return (
       <Tab.Pane
         key="external-player-tab-content"
@@ -813,7 +831,7 @@
           <PluginIntlProvider>
             <h5><FormattedMessage id='tab.header' /></h5>
           </PluginIntlProvider>
-          <SettingsModal />
+          <SettingsModal refreshOnSave />
         </div>
         <ExternalPlayerButtonList sceneProps={sceneProps} />
       </Tab.Pane>
@@ -824,6 +842,8 @@
   PluginApi.patch.after(
     "ScenePage.Tabs",
     function (props: any, _: any, original: any) {
+      const settings = readSettings();
+      if (!settings.showSceneDetailButtons) return original;
 
       original.props.children.push(
         <ExternalPlayerTabLabel />
@@ -837,9 +857,45 @@
   PluginApi.patch.after(
     "ScenePage.TabContent",
     function (props: any, _: any, original: any) {
+      const settings = readSettings();
+      if (!settings.showSceneDetailButtons) return original;
 
       original.props.children.push(
         <ExternalPlayerTabContent sceneProps={props} />
+      );
+
+      return original;
+    }
+  );
+
+  // Add player buttons to the scene detail page toolbar
+  PluginApi.patch.after(
+    "ScenePage",
+    function (props: any, _: any, original: any) {
+      // console.log("props:", props, " original:", original);
+      const settings = readSettings();
+      if (!settings.showSceneToolbarButtons) return original;
+
+      const predicate = (node: any): boolean => {
+        if (!(node?.type === "span" && node.props?.className === "scene-toolbar-group")) return false;
+
+        let children = node.props?.children;
+        if (!children) return false;
+
+        if (!Array.isArray(children)) {
+          children = [children];
+        }
+        
+        return children.some(
+          (item: any) => item?.type === "span" && item.props?.children?.type?.displayName === "Dropdown"
+        );
+      };
+
+      injectIntoReactTree(
+        original,
+        predicate,
+        "prependChild",
+        <span><SceneCardExternalPlayerControls sceneProps={props} /></span>
       );
 
       return original;
@@ -863,7 +919,7 @@
         original,
         (node) => node?.type instanceof Object && node.type?.displayName === "ButtonGroup",
         "appendChild",
-        <SceneCardExternalPlayerControls key="external-player-controls" sceneProps={props} />
+        <SceneCardExternalPlayerControls sceneProps={props} />
       );
 
       return original;

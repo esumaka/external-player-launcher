@@ -12,7 +12,7 @@ This plugin adds support for launching videos in external media players from sce
 - When "Single player mode" is enabled, the dropdown is replaced with a single player button for one-click playback
 - Scene detail pages also support launching external players
 - Individual players can be shown or hidden in settings as needed
-- Independently control whether player buttons appear on scene cards and scene detail pages
+- Independently control whether player buttons appear on scene cards, scene detail page tabs, and the scene detail page toolbar
 - Settings are browser-local, so different devices can have different configurations
 
 ## Screenshots
@@ -27,7 +27,11 @@ Scene card (single player mode):
 
 Scene detail:
 
-![scene-detail](preview/scene-detail.jpg)
+![scene-detail](preview/scene-detail01.jpg)
+
+Scene detail page toolbar (single player mode):
+
+![scene-detail](preview/scene-detail02.png)
 
 ## Supported Players
 
@@ -110,6 +114,12 @@ Portions of this plugin's code are derived from:
 Pull Requests and Issues are welcome.
 
 ## Changelog
+
+### 1.2.0
+
+- Added player buttons to the scene detail page toolbar
+- Added a setting to control the visibility of player buttons in the scene detail page toolbar
+- Saving settings on the scene detail page now automatically refreshes the current page so entry settings take effect immediately
 
 ### 1.1.0
 

@@ -8,6 +8,8 @@
   "settings.showSceneCardButtonsHint": "关闭后，短片卡片底部将不再显示外部播放器按钮。",
   "settings.showSceneDetailButtons": "显示详情页播放器选项卡",
   "settings.showSceneDetailButtonsHint": "关闭后，短片详情页将不再显示外部播放器标签页。",
+  "settings.showSceneToolbarButtons": "显示详情页工具栏播放器按钮",
+  "settings.showSceneToolbarButtonsHint": "关闭后，短片详情页工具栏将不再显示外部播放器按钮。",
   "settings.playerGroupTitle": "播放器设置",
   "settings.singlePlayerMode": "启用单播放器模式",
   "settings.singlePlayerModeHint": "开启后，短片卡片底部的播放器选择器会被替换成下方选择的播放器按钮。",
