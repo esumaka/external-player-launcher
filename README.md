@@ -12,8 +12,8 @@ This plugin adds support for launching videos in external media players from sce
 - When "Single player mode" is enabled, the dropdown is replaced with a single player button for one-click playback
 - Scene detail pages also support launching external players
 - Individual players can be shown or hidden in settings as needed
-- Independently control whether player buttons appear on scene cards, scene detail page tabs, and the scene detail page toolbar
-- Settings are browser-local, so different devices can have different configurations
+- Independently control whether player buttons appear on scene cards, the scene detail page tabs, and the scene detail page toolbar
+- Settings are stored per browser, so different devices can have different configurations
 
 ## Screenshots
 
@@ -35,7 +35,7 @@ Scene detail page toolbar (single player mode):
 
 ## Supported Players
 
-Supported media players and operating systems:
+Supported players and their corresponding platforms:
 
 ⚠️ Note: some players require additional tools to function properly
 
@@ -119,9 +119,10 @@ Pull Requests and Issues are welcome.
 
 - Added player buttons to the scene detail page toolbar
 - Added a setting to control the visibility of player buttons in the scene detail page toolbar
-- Saving settings on the scene detail page now automatically refreshes the current page so entry settings take effect immediately
+- Saving settings on the scene detail page now automatically refreshes the current page so the display location settings take effect immediately
+- Refined UI strings and documentation for clearer, more consistent wording
 
 ### 1.1.0
 
-- Added "Entry Points" settings group to independently control the visibility of player buttons on scene cards and scene detail pages
-- Reorganized settings UI into groups (Entry Points / Player Settings) for a cleaner layout
+- Added the "Display Locations" settings group to independently control the visibility of player buttons on scene cards and scene detail pages
+- Reorganized the settings UI into groups (Display Locations / Player Settings) for a cleaner layout
