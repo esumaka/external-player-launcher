@@ -1,6 +1,7 @@
 import esbuild from 'esbuild';
 import fs from 'fs';
 import path from 'path';
+import YAML from 'yaml';
 import { sassPlugin } from 'esbuild-sass-plugin';
 
 // ==================== CONFIG ====================
@@ -14,11 +15,22 @@ const CONFIG = {
   'src/external-player-launcher.yml': '.',
   'src/assets': '.',
 };
+const CONFIG_FILE = 'src/external-player-launcher.yml'
 // ================================================
 
 const projectRoot = import.meta.dirname;
 const distDir = path.resolve(projectRoot, 'dist');
 const isDev = process.argv.includes('--dev') || process.argv.includes('-d');
+const manifestPath = path.resolve(projectRoot, CONFIG_FILE);
+
+function readPluginVersion() {
+  const manifest = YAML.parse(fs.readFileSync(manifestPath, 'utf8'));
+  const version = manifest?.version;
+  if (typeof version !== 'string' || !version) {
+    throw new Error(`Missing or invalid 'version' field in ${manifestPath}`);
+  }
+  return version;
+}
 
 async function cleanDist() {
   if (fs.existsSync(distDir)) {
@@ -50,6 +62,10 @@ async function buildWithEsbuild(srcPath, destFolder) {
       platform: 'browser',
       format: 'cjs',
       target: ['es2022'],
+      define: {
+        // Inject the version from external-player-launcher.yml as __PLUGIN_VERSION__
+        __PLUGIN_VERSION__: JSON.stringify(readPluginVersion()),
+      },
     }),
   });
 

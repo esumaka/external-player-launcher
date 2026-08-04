@@ -1,3 +1,5 @@
+declare const __PLUGIN_VERSION__: string;
+
 (function () {
   const { PluginApi } = window;
   const { React, ReactDOM } = PluginApi;
@@ -9,6 +11,9 @@
   const { faGear } = FontAwesomeSolid;
   const { useConfiguration } = PluginApi.utils.StashService;
   const { IntlProvider, FormattedMessage } = Intl;
+
+  // Plugin version, injected at build time
+  const PLUGIN_VERSION = __PLUGIN_VERSION__;
 
   const pluginID = 'external-player-launcher';
   const iconsPath = "./plugin/external-player-launcher/assets/icons";
@@ -29,38 +34,35 @@
 
   type PlayerButton = typeof playerButtons[number];
 
-  const messagesCache: Record<string, Record<string, string>> = {};
+  const messagesCache: Record<string, Promise<Record<string, string>> | undefined> = {};
   const defaultLocale = 'en-US';
 
-  async function loadMessages(locale: string): Promise<Record<string, string>> {
+  /**
+   * Load localized messages for the given locale.
+   * Reuses the cached Promise when the locale has already been requested,
+   * and falls back to the default locale when the language file is unavailable.
+   */
+  function loadMessages(locale: string): Promise<Record<string, string>> {
     if (messagesCache[locale]) return messagesCache[locale];
 
-    const tryLoad = async (l: string): Promise<Record<string, string>> => {
-      const res = await fetch(`${localesBase}/${l}.json`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json() as Promise<Record<string, string>>;
-    };
+    const promise = (async () => {
+      const tryLoad = async (l: string): Promise<Record<string, string>> => {
+        const res = await fetch(`${localesBase}/${l}.json?v=${PLUGIN_VERSION}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return (await res.json()) as Record<string, string>;
+      };
 
-    try {
-      const messages = await tryLoad(locale);
-      messagesCache[locale] = messages;
-      return messages;
-    } catch {
-      // fallback: zh-* → zh-CN → en
-      if (locale.startsWith('zh') && locale !== 'zh-CN') {
-        try {
-          const messages = await tryLoad('zh-CN');
-          messagesCache[locale] = messages;
-          return messages;
-        } catch { /* fall through to en */ }
+      try {
+        return await tryLoad(locale);
+      } catch {
+        // Fall back to the default locale
+        if (locale !== defaultLocale) return loadMessages(defaultLocale);
+        return {};
       }
-      if (locale !== defaultLocale) {
-        const fallback = await loadMessages(defaultLocale);
-        messagesCache[locale] = fallback;
-        return fallback;
-      }
-      return {};
-    }
+    })();
+
+    messagesCache[locale] = promise;
+    return promise;
   }
 
   function PluginIntlProvider({ children }: { children: React.ReactNode }) {
@@ -69,9 +71,7 @@
       config.data?.configuration?.interface?.language;
     const locale = language || defaultLocale;
 
-    const [messages, setMessages] = React.useState<Record<string, string>>(
-      () => messagesCache[locale] ?? {}
-    );
+    const [messages, setMessages] = React.useState<Record<string, string>>({});
 
     React.useEffect(() => {
       let cancelled = false;
@@ -946,4 +946,12 @@
     }
   );
 
+  // Preload locale files to avoid flickering on the first render
+  (async () => {
+    const res = await loadMessages(defaultLocale)
+    if (!res) return;
+    console.debug(`[${pluginID}] Preloaded locale messages: ${defaultLocale}`);
+  })();
+
+  console.debug(`[${pluginID}] Loaded plugin successfully`);
 })();
