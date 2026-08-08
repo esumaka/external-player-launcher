@@ -6,14 +6,18 @@
 
 该插件允许通过外部媒体播放器直接播放视频，支持从短片卡片和短片详情页快速启动本地播放器。
 
+由于浏览器对视频格式的支持有限，部分格式（如 AVI、MKV、RMVB 等）需要转码后才能播放。
+
+本插件通过调用媒体播放器绕过浏览器限制，无需转码即可播放更多格式的视频。同时，你可以使用媒体播放器提供的字幕、音轨、播放控制等完整功能，避免转码等待和画质损失。
+
 ## 特性
 
-- 在短片卡片底部添加播放器下拉菜单，方便快速选择外部播放器
-- 开启“单播放器模式”后，下拉菜单将替换为单个播放器按钮，一键播放
-- 短片详情页同样支持打开外部播放器
-- 可在设置中按需显示或隐藏各个播放器
-- 可分别控制播放器按钮在短片卡片、短片详情页标签页和详情页工具栏中的显示与隐藏
-- 设置仅保存在当前浏览器中，不同设备可以各自配置不同的播放器
+- 在短片卡片底部添加播放器选择器，方便快速选择外部播放器。
+- 启用“单播放器模式”后，播放器选择器会替换为单个播放器按钮，实现一键播放。
+- 支持从短片详情页打开外部播放器。
+- 可在设置中按需显示或隐藏各个播放器。
+- 可分别控制播放器按钮在短片卡片、短片详情页标签页和短片详情页工具栏中的显示与隐藏。
+- 设置仅保存在当前浏览器中，因此不同设备可以分别配置播放器。
 
 ## 截图
 
@@ -25,55 +29,55 @@
 
 ![scene-card02](preview/scene-card02.jpg)
 
-短片详情：
+短片详情页：
 
-![scene-detail](preview/scene-detail01.jpg)
+![scene-detail01](preview/scene-detail01.jpg)
 
 短片详情页工具栏（单播放器模式）：
 
-![scene-detail](preview/scene-detail02.png)
+![scene-detail02](preview/scene-detail02.png)
 
 ## 支持的播放器
 
-目前支持的播放器及对应平台如下：
+目前支持的播放器及其对应平台如下：
 
-⚠️ 注意：部分播放器需要安装额外的工具才能正常启动
+⚠️ 注意：部分播放器需要安装额外工具才能正常启动。
 
 | 播放器 | Windows | Android | iOS | macOS | Linux |
 |--------|---------|---------|-----|-------|-------|
 | IINA | | | | ✅ | |
 | Infuse | | | ✅ | ✅ | |
-| MPC-HC | ✅ (需要 [mpc-protocol](https://github.com/muse90673/mpc-protocol/tree/develop)) | | | | |
-| MPV | ✅ (需要 [mpv-handler](https://github.com/akiirui/mpv-handler)) | ✅ | ✅ | | ✅ (需要 [mpv-handler](https://github.com/akiirui/mpv-handler)) |
+| MPC-HC | ✅（需要 [mpc-protocol](https://github.com/muse90673/mpc-protocol/tree/develop)） | | | | |
+| MPV | ✅（需要 [mpv-handler](https://github.com/akiirui/mpv-handler)） | ✅ | ✅ | | ✅（需要 [mpv-handler](https://github.com/akiirui/mpv-handler)） |
 | MX Player (Pro) | | ✅ | | | |
 | nPlayer | | | ✅ | ✅ | |
 | PotPlayer | ✅ | | | | |
-| VLC | ✅ (需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)) | ✅ | ✅ | ✅ (需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)) | ✅ (需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)) |
+| VLC | ✅（需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)） | ✅ | ✅ | ✅（需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)） | ✅（需要 [vlc-protocol](https://github.com/muse90673/vlc-protocol/tree/develop)） |
 
 ## 安装插件
 
-1. 在 Stash 中进入 **设置** → **插件**
-2. 点击 **添加源**，填入以下信息：
+1. 在 Stash 中打开 **设置** → **插件**。
+2. 点击 **添加源**，填写以下信息：
    - **名称**：`esumaka plugin repo`
    - **来源 URL**：`https://esumaka.github.io/stash-plugin-repo/main/index.yml`
-3. 点击 **确认** 添加源
-4. 在可用插件列表中选择 `External Player Launcher` ，点击 **安装**
-5. 刷新 Stash 页面使插件生效
+3. 点击 **确认** 添加源。
+4. 在可用插件列表中选择 `External Player Launcher`，点击 **安装**。
+5. 刷新 Stash 页面，使插件生效。
 
 ## 使用方法
 
-- 确保已安装支持的播放器，见 [支持的播放器](#支持的播放器)
-- 点击短片卡片底部的播放器图标，在弹出的下拉菜单中选择想要的播放器
-- 或者进入短片详情页，切换到“播放器”标签页，然后点击想要的播放器按钮
-- 浏览器可能弹出“尝试打开xxx”的对话框，点击“打开”按钮即可
+- 确保已安装支持的播放器，详见[支持的播放器](#支持的播放器)。
+- 点击短片卡片底部的播放器图标，在下拉菜单中选择所需的播放器。
+- 或进入短片详情页，切换到“播放器”标签页，然后点击所需的播放器按钮。
+- 浏览器可能会弹出“尝试打开 xxx”的对话框，点击 **打开** 即可。
 
 ## 警告
 
-该插件可能与其他修改短片卡片的插件冲突，导致播放器按钮消失或显示位置异常。
+该插件可能与其他修改短片卡片的插件发生冲突，导致播放器按钮消失或显示位置异常。
 
 ## 开发
 
-### 前置要求
+### 环境要求
 
 - [Node.js](https://nodejs.org/) >= 20.11.0
 - [pnpm](https://pnpm.io/)
@@ -81,32 +85,33 @@
 ### 初始化与配置
 
 - 安装依赖：
-  - 运行 `pnpm install --frozen-lockfile`
+  - 运行 `pnpm install --frozen-lockfile`。
 - 配置环境变量：
-  - 复制 `.env.example` 文件并重命名为 `.env`
-  - 设置 `.env` 的 `STASH_PLUGINS_DIR` 为本地 Stash 插件目录
-  - 设置 `.env` 的 `STASH_SOURCE_INDEX_DIR` 为插件源索引仓库的目录，通常为仓库的 `plugins` 文件夹。
+  - 复制 `.env.example` 文件并重命名为 `.env`。
+  - 将 `.env` 中的 `STASH_PLUGINS_DIR` 设置为本地 Stash 插件目录。
+  - 将 `.env` 中的 `STASH_SOURCE_INDEX_DIR` 设置为插件源索引仓库的目录，通常是该仓库中的 `plugins` 文件夹。
 
 ### 构建插件
 
-- 运行 `pnpm build`，或者在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中点击运行 `build` 脚本。
-- 构建产物会输出到项目的 `dist` 文件夹中。
+- 运行 `pnpm build`，或在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中运行 `build` 脚本。
+- 构建产物会输出到项目的 `dist` 文件夹。
 
 ### 部署到本地 Stash（开发调试）
 
-- 运行 `pnpm deploy`，或者在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中点击运行 `deploy` 脚本。
-- 构建产物会输出到 `STASH_PLUGINS_DIR` 文件夹中。
+- 运行 `pnpm deploy`，或在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中运行 `deploy` 脚本。
+- 构建产物会复制到 `STASH_PLUGINS_DIR` 指定的文件夹。
 - 在 Stash 的 **设置** → **插件** 页面中点击 **重载插件**，然后刷新 Stash 页面使插件生效。
 
 ### 发布插件
 
-- 运行 `pnpm release`，或者在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中点击运行 `release` 脚本。
-- 构建产物会输出到 `STASH_SOURCE_INDEX_DIR` 文件夹中。
+- 运行 `pnpm release`，或在 Visual Studio Code 的 **资源管理器 → NPM 脚本** 中运行 `release` 脚本。
+- 构建产物会输出到 `STASH_SOURCE_INDEX_DIR` 指定的文件夹。
 
 ## 致谢
 
-本插件部分代码来自：
-- [bpking1/embyExternalUrl](https://github.com/bpking1/embyExternalUrl) (MIT License)
+本插件的部分代码源自：
+
+- [bpking1/embyExternalUrl](https://github.com/bpking1/embyExternalUrl)（MIT License）
   - [embyLaunchPotplayer.js](https://github.com/bpking1/embyExternalUrl/blob/main/embyWebAddExternalUrl/embyLaunchPotplayer.js)
 
 ## 贡献代码
@@ -117,12 +122,12 @@
 
 ### 1.2.0
 
-- 新增短片详情页工具栏播放器按钮
-- 新增设置项，用于控制短片详情页工具栏中播放器按钮的显示与隐藏
-- 在短片详情页中保存设置后会自动刷新当前页面，使显示位置设置立即生效
-- 优化界面文本与文档措辞，使表达更清晰、术语更统一
+- 新增短片详情页工具栏播放器按钮。
+- 新增设置项，可控制短片详情页工具栏中播放器按钮的显示与隐藏。
+- 在短片详情页保存设置后会自动刷新当前页面，使显示位置设置立即生效。
+- 优化界面文本和文档措辞，使表达更清晰、术语更统一。
 
 ### 1.1.0
 
-- 新增“显示位置”设置分组，可独立控制短片卡片和短片详情页中播放器按钮的显示与隐藏
-- 设置界面重新分组（显示位置 / 播放器设置），结构更清晰
+- 新增“显示位置”设置分组，可分别控制短片卡片和短片详情页中播放器按钮的显示与隐藏。
+- 重新组织设置界面（显示位置 / 播放器设置），结构更清晰。
